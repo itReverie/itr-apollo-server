@@ -1,5 +1,8 @@
+const { gql } = require('apollo-server-express');
+
+
 // Define our schema using the GraphQL schema language
-const typeDefs = `
+const typeDefs = gql`
     type Message {
         id: Int! # will be generated
         text: String!
@@ -20,4 +23,5 @@ const typeDefs = `
         deleteMessage (id: Int!): Boolean
     }
 `;
+
 module.exports = typeDefs;
