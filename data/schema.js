@@ -4,10 +4,7 @@ const { gql } = require('apollo-server-express');
 // Define our schema using the GraphQL schema language
 const typeDefs = gql`
     type Message {
-        id: Int! # will be generated
         text: String!
-        createdAt: DateTime! # will be generated
-        updatedAt: DateTime! # will be generated
     }
     type Query {
         allMessages: [Message]

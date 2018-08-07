@@ -10,7 +10,7 @@ const resolvers = {
         async allMessages() {
             return await Message.all();
         },
-
+  
         // Get a message by ID
         async fetchMessage(_, { id }) {
             return await Message.findById(id);
@@ -34,6 +34,6 @@ const resolvers = {
             return message;
         },
     },
-
 }
+
 module.exports = resolvers;
