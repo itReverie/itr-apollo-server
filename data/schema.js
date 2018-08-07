@@ -18,6 +18,9 @@ const typeDefs = gql`
             text: String!
         ): Message
         deleteMessage (id: Int!): Boolean
+    },
+    type Subscription {
+        messageAdded: Message
     }
 `;
 
