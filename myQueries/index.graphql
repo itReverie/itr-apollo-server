@@ -1,0 +1,12 @@
+# Try to write your query here
+query  allMessages{
+	allMessages {
+    		text
+  }
+}
+
+mutation createMessage{
+  	createMessage(text:"Hi"){
+    		text	
+  }    	
+}
