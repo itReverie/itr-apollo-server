@@ -3,10 +3,9 @@
 const { PubSub } = require('apollo-server');
 const { Message } = require('../models');
 require('dotenv').config();
-const MESSAGE_ADDED = 'MESSAGE_ADDED';
+const MESSAGE_CREATED = 'MESSAGE_CREATED';
 
 const pubsub = new PubSub();
-
 
 // Define resolvers
 const resolvers = {
@@ -24,9 +23,16 @@ const resolvers = {
     Mutation: {
         // Create new message
         async createMessage(_, { text }) {
-            pubsub.publish(MESSAGE_ADDED, { messageAdded: 'ok' });
             return await Message.create({
                 text
+            })
+            .then(message=>{
+                pubsub.publish(MESSAGE_CREATED, 
+                    { messageCreated: message });
+
+            })
+            .then(message=>{
+                return message;
             });
         },
         // Update a particular message
@@ -41,16 +47,11 @@ const resolvers = {
         },
     },
     Subscription: {
-        messageAdded: {
+        messageCreated: {
           // Additional event labels can be passed to asyncIterator creation
-          subscribe: () => pubsub.asyncIterator([MESSAGE_ADDED]),
+          subscribe: () => pubsub.asyncIterator([MESSAGE_CREATED]),
         },
     },
-    
 }
 
-
-/*
-
-*/
 module.exports = resolvers;

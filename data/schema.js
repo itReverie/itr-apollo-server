@@ -4,6 +4,7 @@ const { gql } = require('apollo-server-express');
 // Define our schema using the GraphQL schema language
 const typeDefs = gql`
     type Message {
+        id: Int!,
         text: String!
     }
     type Query {
@@ -20,7 +21,7 @@ const typeDefs = gql`
         deleteMessage (id: Int!): Boolean
     },
     type Subscription {
-        messageAdded: Message
+        messageCreated: Message
     }
 `;
 
