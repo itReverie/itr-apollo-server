@@ -1,12 +1,25 @@
 # Try to write your query here
 query  allMessages{
 	allMessages {
+    				id,			
     		text
   }
 }
 
-mutation createMessage{
-  	createMessage(text:"Hi"){
+mutation createMessage($text: String!){
+  	createMessage(text:$text){
+    		id,
     		text	
-  }    	
+  }  
 }
+
+
+subscription messageCreated{
+  messageCreated
+		{ id
+    		text
+    }
+}
+
+
+  
