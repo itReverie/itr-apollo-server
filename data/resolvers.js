@@ -1,8 +1,8 @@
-'use strict';
-
-const { PubSub } = require('apollo-server');
-const { Message } = require('../models');
+import { PubSub } from 'apollo-server';
+import { Message } from '../models';
 require('dotenv').config();
+
+
 const MESSAGE_CREATED = 'MESSAGE_CREATED';
 
 const pubsub = new PubSub();
@@ -54,4 +54,4 @@ const resolvers = {
     },
 }
 
-module.exports = resolvers;
+export default resolvers;
