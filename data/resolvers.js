@@ -4,6 +4,7 @@ require('dotenv').config();
 
 
 const MESSAGE_CREATED = 'MESSAGE_CREATED';
+const MESSAGE_UPDATED = 'MESSAGE_UPDATED';
 
 const pubsub = new PubSub();
 
@@ -12,7 +13,7 @@ const resolvers = {
     Query: {
         // Fetch all messages
         async allMessages() {
-            return await Message.all();
+            return await Message.all({order:[['id', 'DESC']]});
         },
   
         // Get a message by ID
@@ -23,25 +24,29 @@ const resolvers = {
     Mutation: {
         // Create new message
         async createMessage(_, { text }) {
-            return await Message.create({
+            await Message.create({
                 text
             })
             .then(message=>{
                 pubsub.publish(MESSAGE_CREATED, 
                     { messageCreated: message });
-
             })
             .then(message=>{
                 return message;
             });
         },
         // Update a particular message
-        async updateMessage(_, { id, text}) {
+        async updateMessage(_, { id, text, isFavorite}) {
             // fetch the user by it ID
             const message = await Message.findById(id);
             // Update the user
             await message.update({
-                text
+                text,
+                isFavorite
+            })
+            .then(message=>{
+                pubsub.publish(MESSAGE_UPDATED, 
+                    { messageUpdated: message });
             });
             return message;
         },
@@ -51,7 +56,11 @@ const resolvers = {
           // Additional event labels can be passed to asyncIterator creation
           subscribe: () => pubsub.asyncIterator([MESSAGE_CREATED]),
         },
-    },
+        messageUpdated: {
+            // Additional event labels can be passed to asyncIterator creation
+            subscribe: () => pubsub.asyncIterator([MESSAGE_UPDATED]),
+          },
+    }
 }
 
 export default resolvers;
