@@ -4,7 +4,8 @@ import { gql } from 'apollo-server-express';
 const typeDefs = gql`
     type Message {
         id: Int!,
-        text: String!
+        text: String!,
+        isFavorite: Boolean!
     }
     type Query {
         allMessages: [Message]
@@ -15,12 +16,14 @@ const typeDefs = gql`
             text: String!
         ): Message
         updateMessage (
+            id: Int!
             text: String!
+            isFavorite: Boolean!
         ): Message
-        deleteMessage (id: Int!): Boolean
     },
     type Subscription {
         messageCreated: Message
+        messageUpdated(id: Int!): Message
     }
 `;
 
