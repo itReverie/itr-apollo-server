@@ -1,4 +1,4 @@
-import { PubSub } from 'apollo-server';
+import { PubSub, withFilter } from 'apollo-server';
 import { Message } from '../models';
 require('dotenv').config();
 
@@ -58,7 +58,12 @@ const resolvers = {
         },
         messageUpdated: {
             // Additional event labels can be passed to asyncIterator creation
-            subscribe: () => pubsub.asyncIterator([MESSAGE_UPDATED]),
+            subscribe: withFilter(
+                                        () => pubsub.asyncIterator([MESSAGE_UPDATED]),
+                                        (payload, variables) => {
+                                            return payload.messageUpdated.id === variables.id;
+                                           },
+                                        ),
           },
     }
 }

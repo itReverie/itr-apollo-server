@@ -23,7 +23,7 @@ const typeDefs = gql`
     },
     type Subscription {
         messageCreated: Message
-        messageUpdated: Message
+        messageUpdated(id: Int!): Message
     }
 `;
 
