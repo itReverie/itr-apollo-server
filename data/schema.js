@@ -20,9 +20,6 @@ const typeDefs = gql`
             text: String!
             isFavorite: Boolean!
         ): Message
-        deleteMessage (
-            id: Int!
-        ): Boolean
     },
     type Subscription {
         messageCreated: Message
