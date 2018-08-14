@@ -1,5 +1,5 @@
 'use strict';
-//queryInterface, Sequelize
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Message', {

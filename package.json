@@ -1,7 +1,7 @@
 {
   "name": "itr-apollo-server",
   "version": "1.0.0",
-  "description": "Basic apollo server connected to a mysql db",
+  "description": "Basic graphql apollo server connected to a mysql db",
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js  --exec babel-node --presets env"
