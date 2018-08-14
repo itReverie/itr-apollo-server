@@ -1,25 +1,45 @@
 # Try to write your query here
 query  allMessages{
 	allMessages {
-    				id,			
-    		text
+    id,			
+    text,
+    isFavorite
   }
+}
+
+mutation updateMessage($id: Int!,$text: String!, $isFavorite:Boolean! ){
+  updateMessage (id: $id,text: $text, isFavorite:$isFavorite ){
+    id,
+    text,
+    isFavorite
+  } 		
 }
 
 mutation createMessage($text: String!){
   	createMessage(text:$text){
-    		id,
-    		text	
+    id,
+    text,
+    isFavorite
   }  
 }
 
 
 subscription messageCreated{
-  messageCreated
-		{ id
-    		text
-    }
+  messageCreated{ 
+    id
+    text
+    isFavorite
+  }
 }
+
+subscription messageUpdated($id: Int!){
+  messageUpdated(id:$id){ 
+      id
+    	text
+      isFavorite
+  }
+}
+
 
 
   

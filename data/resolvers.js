@@ -18,26 +18,15 @@ const resolvers = {
     },
     Mutation: {
         async createMessage(_, { text }) {
-            await Message.create({
-                text
-            })
-            .then(message=>{
-                pubsub.publish(MESSAGE_CREATED, 
-                    { messageCreated: message });
-            })
-            .then(message=>{
-                return message;
-            });
+            const message = await Message.create({ text });
+            await pubsub.publish(MESSAGE_CREATED, { messageCreated: message });
+            return message;
         },
         async updateMessage(_, { id, text, isFavorite}) {
             const message = await Message.findById(id);
-            await message.update({
-                text,
-                isFavorite
-            })
+            await message.update({text,isFavorite})
             .then(message=>{
-                pubsub.publish(MESSAGE_UPDATED, 
-                    { messageUpdated: message });
+                pubsub.publish(MESSAGE_UPDATED, { messageUpdated: message });
             });
             return message;
         },
