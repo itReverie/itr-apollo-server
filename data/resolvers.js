@@ -48,7 +48,7 @@ const resolvers = {
         },
         messageUpdated: {
             subscribe: withFilter(
-                                  () => pubsub.asyncIterator([MESSAGE_UPDATED]),
+                                  () => pubsub.asyncIterator('MESSAGE_UPDATED'),
                                         (payload, variables) => {
                                                 return payload.messageUpdated.id === variables.id;
                                             },

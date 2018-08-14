@@ -16,6 +16,6 @@ const httpServer = createServer(app);
 apolloServer.installSubscriptionHandlers(httpServer);
 
 httpServer.listen({ port: PORT }, () =>{
-  console.log(`🚀 Server ready at http://localhost:4000${apolloServer.graphqlPath}`)
+  console.log(`🚀 Server ready at http://localhost:${PORT}${apolloServer.graphqlPath}`)
   console.log(`🚀 Subscriptions ready at ws://localhost:${PORT}${apolloServer.subscriptionsPath}`)
 })
